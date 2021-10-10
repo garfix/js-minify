@@ -1,0 +1,1 @@
+var π=Math.PI,ε=1e-6;if(π===Math.PI)ε=1e-6 else ε=-Math.PI;

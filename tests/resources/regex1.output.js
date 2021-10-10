@@ -1,0 +1,1 @@
+function f13(){return/\?/.test(url)?"&":"?";}
