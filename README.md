@@ -10,7 +10,7 @@ The simplest use is simply this:
 
 If you want to change the default options, use `minify($js, $options)`, where `$options` is an array of one or more of the following:
 
-* \Garfix\JsMinify\Minifier::FLAGGED_COMMENTS (bool, default: true) When `true`, `/*! ... */` flagged comments are left in.
+* `\Garfix\JsMinify\Minifier::FLAGGED_COMMENTS` (bool, default: `true`) When set to `false`, `/*! ... */` flagged comments are removed as well.
 
 ## Background
 

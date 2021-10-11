@@ -7,12 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class MinifierTest extends TestCase
 {
-    /**
-     * @js-minify
-     */
     public function testJsMinify()
     {
-        $baseDir = __DIR__ . '/resources/';
+        $baseDir = __DIR__ . '/../../../resources/';
 
         $testFiles = glob($baseDir . '*.input.js');
         foreach ($testFiles as $inputFile) {

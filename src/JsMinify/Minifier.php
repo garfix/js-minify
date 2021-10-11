@@ -2,10 +2,14 @@
 
 namespace Garfix\JsMinify;
 
+use RuntimeException;
+
 /**
- * This minifier removes whitespace from a JavaScript file.
+ * This minifier removes whitespace and comments from a Javascript string.
  *
  * See docs for information.
+ *
+ * @author Patrick van Bergen
  */
 class Minifier
 {
@@ -18,11 +22,12 @@ class Minifier
     protected $options = [];
 
     /**
-     * Processes a javascript string and outputs only the required characters,
-     * stripping out all unneeded characters.
+     * Processes a javascript string and returns only the required characters,
+     * stripping out all unneeded whitespace and comments.
      *
      * @param string $js      The raw javascript to be minified
      * @param array  $options Various runtime options in an associative array
+     * @throws RuntimeException
      */
     public static function minify($js, $options = [])
     {
@@ -35,6 +40,11 @@ class Minifier
         $this->options = array_merge(static::$defaultOptions, $options);
     }
 
+    /**
+     * @param string $js    The raw javascript to be minified
+     * @return string
+     * @throws RuntimeException
+     */
     public function minifyUsingCallbacks($js)
     {
         $e = MinifierExpressions::get();
@@ -49,14 +59,14 @@ class Minifier
 
         // rewrite blocks by inserting whitespace placeholders
         $exp2 = "~(?:" .  implode("|", $e->allExpressions) . ")~su";
-        $placeholderText = preg_replace_callback($exp2, [$this, 'processBlocks'], $shrunkText);
+        $shrunkText = preg_replace_callback($exp2, [$this, 'processBlocks'], $shrunkText);
         MinifierError::checkRegexpError();
 
         // remove all remaining space (without the newlines)
-        $shrunkText = preg_replace("~" . $e->someWhitespace . "~", '', $placeholderText);
+        $shrunkText = preg_replace("~" . $e->someWhitespace . "~", '', $shrunkText);
         MinifierError::checkRegexpError();
 
-        // reduce multiple newlines to single one
+        // reduce consecutive newlines to single one
         $shrunkText = preg_replace("~[\\n]+~", "\n", $shrunkText);
         MinifierError::checkRegexpError();
 

@@ -2,6 +2,9 @@
 
 namespace Garfix\JsMinify;
 
+/**
+ * @author Patrick van Bergen
+ */
 class MinifierExpressions
 {
     protected static $expressions = null;
@@ -16,6 +19,9 @@ class MinifierExpressions
     public $someWhitespace;
     public $regexp;
 
+    /**
+     * @return MinifierExpressions
+     */
     public static function get() {
         if (self::$expressions === null) {
             self::$expressions = self::create();
@@ -70,9 +76,11 @@ class MinifierExpressions
             "(?<=[;" . $openingBrackets . $safeOperators . "])" . "\n",
             // newline followed by closing bracket or operator
             "\n" . "(?=[;" . $closingBrackets. $safeOperators . "])",
-            // newline between any two brackets
+            // ( \n [
             "(?<=[" . $openingBrackets . "])" . "\n" . "(?=[" . $openingBrackets . "])",
+            // ] \n )
             "(?<=[" . $closingBrackets . "])" . "\n" . "(?=[" . $closingBrackets . "])",
+            // } \n (
             "(?<=[" . $expressionClosingBracket . "])" . "\n" . "(?=[" . $blockOpeningBracket . "])",
         ];
 

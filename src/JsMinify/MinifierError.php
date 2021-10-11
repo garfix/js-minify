@@ -9,6 +9,9 @@ use RuntimeException;
  */
 class MinifierError
 {
+    /**
+     * @throws RuntimeException
+     */
     public static function checkRegexpError()
     {
         $error = preg_last_error();
