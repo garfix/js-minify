@@ -2,11 +2,19 @@
 
 A fast Javascript minifier that removes unnecessary whitespace and comments
 
+## Installation
+
+If you are using Composer, use 
+
+    composer require garfix/js-minify
+
 ## Use
 
-The simplest use is simply this:
+The simplest use of the library comes down to this:
 
     $minifiedJs = \Garfix\JsMinify\Minifier::minify($js);
+
+Where `$js` contains the unprocessed code and `$minifiedJs` holds the minified version. 
 
 If you want to change the default options, use `minify($js, $options)`, where `$options` is an array of one or more of the following:
 
