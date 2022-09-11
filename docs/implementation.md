@@ -56,3 +56,32 @@ This library can be fast because it uses regular expressions quite a bit.
 * All regular expressions have the unicode modifier (u), which ensures that the JS is not treated as bytes but as encoded code points. 
 * The "dotall" modifier (s) is used everywhere: the dot (.) also matches the newline
 * The expressions use the greedy quantifier after or-groups, to avoid the chance of JIT stack overflow.
+
+## Line endings and newlines that can't be removed
+
+JavaScript code may depend on its newlines for its semantics, especially, but not exclusively, when no semicolons are used.
+Which newlines may be removed depends for a part on its parsed form.
+
+The issue can best be explained with an example:
+
+    function a(x) { return x * x; }
+    let b = a(2) + a(3);
+
+The newlines between the function and the assignment may be omitted:
+
+    function a(x) { return x * x; } let b = a(2) + a(3);
+
+But if we write
+
+    let a = function(x) { return x * x; }
+    let b = a(2) + a(3);
+
+The newline may not be removed
+
+    let a = function(x) { return x * x; } let b = a(2) + a(3);
+
+    // Error: identifier expected
+
+The library cannot parse the text, so it needs to remove only newlines that are safe. 
+
+See also https://github.com/douglascrockford/JSMin

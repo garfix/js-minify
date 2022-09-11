@@ -82,6 +82,8 @@ class MinifierExpressions
             "(?<=[" . $closingBrackets . "])" . "\n" . "(?=[" . $closingBrackets . "])",
             // } \n (
             "(?<=[" . $expressionClosingBracket . "])" . "\n" . "(?=[" . $blockOpeningBracket . "])",
+            // } word
+            "(?<=[" . $closingBrackets . "])" . "\n" . "(?=" . $word . ")",
         ];
 
         // these expression must always be present, because they keep tokens that contain whitespace together

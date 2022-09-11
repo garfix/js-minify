@@ -72,7 +72,7 @@ class Minifier
 
         // remove newlines that may safely be removed
         foreach ($e->safeNewlines as $safeNewline) {
-            $shrunkText = preg_replace("~" . $safeNewline . "~", "", $shrunkText);
+            $shrunkText = preg_replace("~" . $safeNewline . "~su", "", $shrunkText);
             MinifierError::checkRegexpError();
         }
 
